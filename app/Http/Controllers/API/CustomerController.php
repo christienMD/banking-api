@@ -20,7 +20,7 @@ class CustomerController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Customer::query();
-
+        
         // Apply filters if provided
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
@@ -29,13 +29,13 @@ class CustomerController extends Controller
         if ($request->has('email')) {
             $query->where('email', 'like', '%' . $request->email . '%');
         }
-
-        // Apply pagination
-        $customers = $query->paginate($request->per_page ?? 15);
-
+        
+        // Apply pagination (default 15 per page)
+        $perPage = $request->per_page ?? 12;
+        $customers = $query->paginate($perPage);
+        
         return $this->success($customers, 'Customers retrieved successfully');
     }
-
     /**
      * Store a newly created customer.
      */
@@ -49,21 +49,39 @@ class CustomerController extends Controller
     /**
      * Display the specified customer.
      */
-    public function show(Customer $customer): JsonResponse
+    public function show($id): JsonResponse
     {
+        // Find the customer by ID
+        $customer = Customer::find($id);
+        
+        if (!$customer) {
+            return $this->error('Customer not found', 404);
+        }
+        
         // Load accounts relationship
         $customer->load('accounts');
-
+        
         return $this->success($customer, 'Customer retrieved successfully');
     }
 
     /**
      * Update the specified customer.
      */
-    public function update(UpdateCustomerRequest $request, Customer $customer): JsonResponse
+    public function update(UpdateCustomerRequest $request, $id): JsonResponse
     {
+        // Find the customer by ID
+        $customer = Customer::find($id);
+        
+        if (!$customer) {
+            return $this->error('Customer not found', 404);
+        }
+        
+        // Update the customer with validated data
         $customer->update($request->validated());
-
+        
+        // Refresh the model to get updated data
+        $customer->refresh();
+        
         return $this->success($customer, 'Customer updated successfully');
     }
 
