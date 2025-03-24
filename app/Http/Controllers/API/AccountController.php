@@ -20,8 +20,14 @@ class AccountController extends Controller
     /**
      * Display a listing of accounts for a customer.
      */
-    public function index(Customer $customer): JsonResponse
+    public function index($customerId): JsonResponse
     {
+        $customer = Customer::find($customerId);
+        
+        if (!$customer) {
+            return $this->error('Customer not found', 404);
+        }
+        
         $accounts = $customer->accounts()->paginate(15);
         
         return $this->success($accounts, 'Accounts retrieved successfully');
@@ -30,8 +36,14 @@ class AccountController extends Controller
     /**
      * Store a newly created account.
      */
-    public function store(StoreAccountRequest $request, Customer $customer): JsonResponse
+    public function store(StoreAccountRequest $request, $customerId): JsonResponse
     {
+        $customer = Customer::find($customerId);
+        
+        if (!$customer) {
+            return $this->error('Customer not found', 404);
+        }
+        
         $validated = $request->validated();
         
         try {
@@ -79,8 +91,14 @@ class AccountController extends Controller
     /**
      * Display the specified account.
      */
-    public function show(Account $account): JsonResponse
+    public function show($accountId): JsonResponse
     {
+        $account = Account::find($accountId);
+        
+        if (!$account) {
+            return $this->error('Account not found', 404);
+        }
+        
         // Load the customer relationship
         $account->load('customer');
         
@@ -90,12 +108,18 @@ class AccountController extends Controller
     /**
      * Get account balance.
      */
-    public function getBalance(Account $account): JsonResponse
+    public function getBalance($accountId): JsonResponse
     {
+        $account = Account::find($accountId);
+        
+        if (!$account) {
+            return $this->error('Account not found', 404);
+        }
+        
         return $this->success([
             'account_number' => $account->account_number,
             'balance' => $account->balance,
-            'currency' => 'XAF',
+            'currency' => 'XAF', // Assuming USD as default currency
         ], 'Balance retrieved successfully');
     }
 

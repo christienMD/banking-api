@@ -31,15 +31,10 @@ Route::middleware('api.key')->group(function () {
         Route::patch('customers/{id}', [CustomerController::class, 'update']);
         Route::delete('customers/{id}', [CustomerController::class, 'destroy']);
         
-        // Account resources
-        Route::prefix('customers')->group(function () {
-            Route::get('{customer}/accounts', [AccountController::class, 'index']);
-            Route::post('{customer}/accounts', [AccountController::class, 'store']);
-        });
-        
-        Route::prefix('accounts')->group(function () {
-            Route::get('{account}', [AccountController::class, 'show']);
-            Route::get('{account}/balance', [AccountController::class, 'getBalance']);
-        });
+       // Account resources
+        Route::get('customers/{customerId}/accounts', [AccountController::class, 'index']);
+        Route::post('customers/{customerId}/accounts', [AccountController::class, 'store']);
+        Route::get('accounts/{accountId}', [AccountController::class, 'show']);
+        Route::get('accounts/{accountId}/balance', [AccountController::class, 'getBalance']);
     });
 });
