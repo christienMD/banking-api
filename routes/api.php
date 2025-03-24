@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CustomerController;
+use App\Http\Controllers\API\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 // All routes require API key
@@ -36,5 +37,9 @@ Route::middleware('api.key')->group(function () {
         Route::post('customers/{customerId}/accounts', [AccountController::class, 'store']);
         Route::get('accounts/{accountId}', [AccountController::class, 'show']);
         Route::get('accounts/{accountId}/balance', [AccountController::class, 'getBalance']);
+
+        // Transaction routes
+        Route::post('transactions', [TransactionController::class, 'store']);
+        Route::get('accounts/{accountId}/transactions', [TransactionController::class, 'index']);
     });
 });
