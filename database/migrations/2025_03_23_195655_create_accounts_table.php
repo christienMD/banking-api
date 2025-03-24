@@ -18,8 +18,8 @@ class CreateAccountsTable extends Migration
             $table->string('account_number')->unique();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->decimal('balance', 15, 2)->default(0);
-            $table->enum('type', ['savings', 'checking']); // Using enum for account types
-            $table->enum('status', ['active', 'inactive', 'frozen'])->default('active'); // Using enum for status
+            $table->enum('type', ['savings', 'checking']);
+            $table->enum('status', ['active', 'inactive', 'frozen'])->default('active');
             $table->timestamps();
         });
     }

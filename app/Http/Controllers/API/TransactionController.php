@@ -16,6 +16,13 @@ class TransactionController extends Controller
 {
     use ApiResponder;
 
+    public function __construct()
+    {
+        
+        $this->middleware('throttle:60,1')->only(['index', 'show']);
+        $this->middleware('throttle:10,1')->only(['store', 'update', 'destroy']);
+    }
+
     /**
      * Transfer money between accounts.
      */
