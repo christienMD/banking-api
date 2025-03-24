@@ -22,6 +22,7 @@ Route::middleware('api.key')->group(function () {
             Route::post('users', [AuthController::class, 'storeUser']);
         });
         
+        Route::apiResource('customers', App\Http\Controllers\API\CustomerController::class);
         
     });
 });
