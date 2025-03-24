@@ -88,8 +88,8 @@ All endpoints require:
 ## API Documentation
 
 API documentation is available via Postman. You can access it 
-[here](https://documenter.getpostman.com/view/23975272/2sAYkHpJZR).
-[here](https://documenter.getpostman.com/view/23975272/2sAYkHpJZS).
-[here](https://documenter.getpostman.com/view/23975272/2sAYkHpJZV).
-[here](https://documenter.getpostman.com/view/23975272/2sAYkHpJdo).
+[Authentication](https://documenter.getpostman.com/view/23975272/2sAYkHpJZR).
+[Customer](https://documenter.getpostman.com/view/23975272/2sAYkHpJZS).
+[Transaction](https://documenter.getpostman.com/view/23975272/2sAYkHpJZV).
+[Account](https://documenter.getpostman.com/view/23975272/2sAYkHpJdo).
 
